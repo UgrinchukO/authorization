@@ -26,19 +26,28 @@ const users = [{
         pass: "9876543210"
     }]
 
-function login(email, pass) {
-    let inputLogin = document.getElementById('login')
-    let inputPassword = document.getElementById('password')
 
-    let checkUser = users.find(user => user.email)
-    let checkPass = users.find(user => user.pass)
+function validateUser(loginEmail, password) {
 
-    if (inputLogin.value === checkUser.email
-        &&
-        inputPassword.value === checkPass.pass) {
-        console.log('correct')
+    let checkUser = users.find( ({ email }) => email === loginEmail )
+
+    if (checkUser) {
+        if(checkUser.pass === password) {
+            console.log('login success, user:', checkUser);
+            return `login success, user: ${checkUser}`
+        } else {
+            console.log('wrong pass, repeat!')
+            return 'wrong pass'
+        }
+    } else {
+        return 'user not found'
     }
-    console.log("incorrect")
+}
+
+function login() {
+    let log = document.getElementById('login').value
+    let pass = document.getElementById('password').value
+    return validateUser(log, pass)
 }
 
 //throw error wrong pass
